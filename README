@@ -1,0 +1,16 @@
+# clojure-warrior
+
+Clojure-warrior is a simple text-based game where you write the code to rescue captives, kill enemies, and scale a tower. This is an adaptation of Ryanb's excellent ruby-warrior at https://github.com/ryanb/ruby-warrior
+
+## Usage
+
+FIXME: pending
+
+## Installation
+
+FIXME: pending
+
+## License
+
+GNU General Public License version 3, GPLv3
+Copyright (C) 2010 Seth Schroeder, foogoof@gmail.com

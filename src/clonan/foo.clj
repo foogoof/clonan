@@ -15,8 +15,7 @@
 
 (ns clonan.foo
   (:refer-clojure :rename { print core-print, find core-find })
-  (:use [clojure.contrib.seq :only [positions]])
-  )
+  (:use [clojure.contrib.seq :only [positions]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -28,11 +27,23 @@
   (find [_ type])
   (get-warrior [_])
   (get-stairs [_])
+  (transform [_ event])
 
   ;; warts below
   (content-width [_])
-  (row [_])
-  )
+  (row [_]))
+
+(defprotocol IPlayer
+  (play-turn [_ warrior]))
+
+(defprotocol ILevelOneMethods
+  (walk! [_]))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(deftype player []
+  IPlayer
+  (play-turn [_ clonan] (walk! clonan)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -40,9 +51,18 @@
   IThing
   (to-char [_] \-))
 
-(deftype warrior []
+(defrecord warrior [last-action]
   IThing
-  (to-char [_] \@))
+  (to-char [_] \@)
+
+  ILevelOneMethods
+  (walk! [_] (reset! last-action :walk!))
+  )
+
+;; (def w (warrior. (atom nil)))
+
+;; @(:last-action w)
+;; (walk! w)
 
 (deftype sludge []
   IThing
@@ -91,6 +111,14 @@
   (get-stairs [self]
     (nth (row self) (find self stairs)))
 
+  (transform [self event]
+    (let [clonan (get-warrior self)
+          clonan-pos (find self warrior)]
+    (if (= event :walk!)
+      (board. (content-width self) (vector (assoc (row self) clonan-pos (vacancy.), (inc clonan-pos) clonan)))
+      (throw (Exception. (str "unexpected action of " event)))))
+    )
+  
   ;; warts
   (content-width [_] width)
   (row [_] (first rows))
@@ -102,7 +130,7 @@
 (defn- entity-factory [cls]
   (condp = cls
       wall (wall.)
-      warrior (warrior.)
+      warrior (warrior. (atom nil))
       sludge (sludge.)
       stairs (stairs.)
       vacancy (vacancy.)))
@@ -129,22 +157,21 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(def tb (make-board 1))
-(print tb)
-(print (transform-board tb :walk!))
+(defn- take-action [warrior player]
+  (play-turn player warrior)
+  @(:last-action warrior))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn play-level [level player-callback]
+(defn play-level [level player]
   (loop [board (make-board level)]
     (let [warrior-pos (find board warrior)
           stair-pos (find board stairs)]
       (print board)
       (if (or (nil? stair-pos) (>= warrior-pos stair-pos))
         (println "you win!")
-        (recur (transform-board board :walk!)))))
-  )
-
-(play-level 1 nil)
+        (recur (transform board (take-action (get-warrior board) player)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(play-level 1 (player.))

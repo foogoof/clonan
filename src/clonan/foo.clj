@@ -56,8 +56,7 @@
   (to-char [_] \@)
 
   ILevelOneMethods
-  (walk! [_] (reset! last-action :walk!))
-  )
+  (walk! [_] (reset! last-action :walk!)))
 
 ;; (def w (warrior. (atom nil)))
 
@@ -116,13 +115,11 @@
           clonan-pos (find self warrior)]
     (if (= event :walk!)
       (board. (content-width self) (vector (assoc (row self) clonan-pos (vacancy.), (inc clonan-pos) clonan)))
-      (throw (Exception. (str "unexpected action of " event)))))
-    )
+      (throw (Exception. (str "unexpected action of " event))))))
   
   ;; warts
   (content-width [_] width)
-  (row [_] (first rows))
-  )
+  (row [_] (first rows)))
 
 ;; pretty sure this is really missing the point of protocols, this is
 ;; not extensible
@@ -144,16 +141,6 @@
         width (:width initial-state)
         rows (map #(hydrate-row width %) (:rows initial-state))]
     (board. width (apply vector rows))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn transform-board [board event]
-  (let [clonan (get-warrior board)
-        clonan-pos (find board warrior)]
-    (if (= event :walk!)
-      (board. (content-width board)
-              (vector (assoc (row board) clonan-pos (vacancy.), (inc clonan-pos) clonan)))
-      (throw (Exception. (str "unexpected action of " event))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

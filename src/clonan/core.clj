@@ -69,7 +69,7 @@
           stair-pos (find board stairs)]
       (println "- turn" turn "-")
       (print board)
-      (if (or (nil? stair-pos) (>= warrior-pos stair-pos))
+      (if (= (inc warrior-pos) stair-pos)
         (println "Success! You have found the stairs.")
         (recur (transform board (take-action (get-warrior board) player)) (inc turn))))))
 

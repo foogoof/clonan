@@ -22,7 +22,13 @@
   (play-turn [_ warrior]))
 
 (defprotocol ILevelOneMethods
-  (walk! [_]))
+  (walk! [_] [_ direction]))
+
+;; FIXME: this seems clumsy
+(defprotocol ILevelTwoMethods
+  (feel [_ & direction])
+  (attack! [_ & direction])
+  )
 
 (defprotocol IBoard
   (print [_])
@@ -35,3 +41,5 @@
   (content-width [_])
   (row [_])
   (respond-to-walk! [_]))
+
+(defrecord Action [name direction])

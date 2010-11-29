@@ -28,7 +28,10 @@
   (to-char [_] \@)
 
   ILevelOneMethods
-  (walk! [_] (reset! last-action :walk!)))
+  (walk! [_] (walk! _ :forward))
+  (walk! [_ direction]
+    (let [action (Action. :walk! direction)]
+      (reset! last-action action))))
 
 (deftype sludge []
   IThing
@@ -60,8 +63,9 @@
   (get-stairs [self]
     (nth (row self) (find self stairs)))
 
-  (transform [self event]
+  (transform [self action]
     (let [clonan (get-warrior self)
+          event (:name action)
           clonan-pos (find self warrior)]
     (if (= event :walk!)
       (respond-to-walk! self)

@@ -31,7 +31,12 @@
   (walk! [_] (walk! _ :forward))
   (walk! [_ direction]
     (let [action (Action. :walk! direction)]
-      (reset! last-action action))))
+      (reset! last-action action)))
+
+  ILevelTwoMethods
+  (feel [_] (feel _ :forward))
+  (feel [_ direction])
+  )
 
 (deftype sludge []
   IThing

@@ -15,6 +15,7 @@
 
 (defproject clojure-warrior "0.0.1" ;; Versioning guidelines are at http://semver.org/
   :description "Clojure-warrior is a simple text-based game where you write the code to rescue captives, kill enemies, and scale a tower. This is an adaptation of Ryanb's excellent ruby-warrior at https://github.com/ryanb/ruby-warrior"
+  :main "clonan.main"
   :dependencies [[org.clojure/clojure "1.2.0"]
                  [org.clojure/clojure-contrib "1.2.0"]]
   :dev-dependencies [[swank-clojure "1.2.1"]]

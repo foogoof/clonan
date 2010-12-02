@@ -26,8 +26,8 @@
 
 ;; FIXME: this seems clumsy
 (defprotocol ILevelTwoMethods
-  (feel [_ & direction])
-  (attack! [_ & direction])
+  (feel [_] [_ direction])
+  (attack! [_] [_ direction])
   )
 
 (defprotocol IBoard

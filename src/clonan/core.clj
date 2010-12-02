@@ -77,4 +77,4 @@
 
 ;; (print (make-board 1))
 ;; (find (make-board 1) warrior)
-(play-level 1 (player.))
+;; (play-level 1 (player.))

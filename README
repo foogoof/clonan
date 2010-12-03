@@ -1,14 +1,16 @@
-# clojure-warrior
+# Clonan
 
-Clojure-warrior is a simple text-based game where you write the code to rescue captives, kill enemies, and scale a tower. This is an adaptation of Ryanb's excellent ruby-warrior at https://github.com/ryanb/ruby-warrior
+Clonan is a simple text-based game where you write the code to rescue captives, kill enemies, and scale a tower. This is an adaptation of Ryanb's excellent [ruby-warrior](https://github.com/ryanb/ruby-warrior)
 
 ## Usage
 
-FIXME: pending
+lein run
+
+This will demonstrate the first level. The code is only in demo mode at this point.
 
 ## Installation
 
-FIXME: pending
+git clone
 
 ## License
 

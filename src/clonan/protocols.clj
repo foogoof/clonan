@@ -16,7 +16,8 @@
 (in-ns 'clonan.core)
 
 (defprotocol IThing
-  (to-char [_]))
+  (to-char [_])
+  (empty? [_]))
 
 (defprotocol IPlayer
   (play-turn [_ warrior]))

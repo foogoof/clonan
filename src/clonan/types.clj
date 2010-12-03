@@ -17,15 +17,36 @@
 
 (deftype player []
   IPlayer
-  (play-turn [_ clonan] (walk! clonan)))
+  (play-turn [_ clonan]
+    (let [ahead (feel clonan :forward)]
+      (if (empty? ahead)
+        (walk! clonan :forward)
+        (attack! clonan :forward)))))
 
 (deftype wall []
   IThing
-  (to-char [_] \-))
+  (to-char [_] \-)
+  (empty? [_] false))
+
+(deftype sludge []
+  IThing
+  (to-char [_] \s)
+  (empty? [_] false))
+
+(deftype stairs []
+  IThing
+  (to-char [_] \>)
+  (empty? [_] false))
+
+(deftype vacancy []
+  IThing
+  (to-char [_] \space)
+  (empty? [_] true))
 
 (defrecord warrior [last-action]
   IThing
   (to-char [_] \@)
+  (empty? [_] false)
 
   ILevelOneMethods
   (walk! [_] (walk! _ :forward))
@@ -35,20 +56,11 @@
 
   ILevelTwoMethods
   (feel [_] (feel _ :forward))
-  (feel [_ direction])
+  (feel [_ direction] (sludge.))
+
+  (attack! [_] (attack! _ :forward))
+  (attack! [_ direction] (println "Imagine something dying") (walk! _))
   )
-
-(deftype sludge []
-  IThing
-  (to-char [_] \s))
-
-(deftype stairs []
-  IThing
-  (to-char [_] \>))
-
-(deftype vacancy []
-  IThing
-  (to-char [_] \space))
 
 (deftype board [width rows]
   IBoard

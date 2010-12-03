@@ -14,7 +14,7 @@
 ;;  along with clojure-warrior.  If not, see <http://www.gnu.org/licenses/>.
 
 (ns clonan.core
-  (:refer-clojure :rename { print core-print, find core-find })
+  (:refer-clojure :rename { print core-print, find core-find, empty? core-empty? })
   (:use [clojure.contrib.seq :only [positions]]))
 
 (load "protocols")

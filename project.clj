@@ -13,9 +13,9 @@
 ;;  You should have received a copy of the GNU General Public License
 ;;  along with clojure-warrior.  If not, see <http://www.gnu.org/licenses/>.
 
-(defproject clojure-warrior "0.0.1" ;; Versioning guidelines are at http://semver.org/
+(defproject clojure-warrior "0.0.6" ;; Versioning guidelines are at http://semver.org/
   :description "Clojure-warrior is a simple text-based game where you write the code to rescue captives, kill enemies, and scale a tower. This is an adaptation of Ryanb's excellent ruby-warrior at https://github.com/ryanb/ruby-warrior"
-  :main "clonan.main"
+  :main clonan.main
   :dependencies [[org.clojure/clojure "1.2.0"]
                  [org.clojure/clojure-contrib "1.2.0"]]
   :dev-dependencies [[swank-clojure "1.2.1"]]
